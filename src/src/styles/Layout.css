@@ -1,0 +1,13 @@
+.Layout{
+    height: 100vh;
+    display: grid;
+    grid-template-rows: 100px 1fr 60px;
+}
+
+.Layout .content{
+    background-color: #222;
+    margin: 0.8rem;
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: row;
+}

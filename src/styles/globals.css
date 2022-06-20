@@ -1,0 +1,38 @@
+:root {
+  --bg-color-red: linear-gradient(to right, rgb(229, 45, 39), rgb(179, 18, 23));
+  --bg-color-blue: linear-gradient(to right, rgb(0, 210, 255), rgb(58, 123, 213));
+  --bg-color-green: linear-gradient(to right, rgb(2, 170, 176), rgb(0, 205, 172));
+  --bg-color-pink: linear-gradient(to right, #da22ff, #9733ee);
+  --color-dark: #000;
+  --color-light: #EFF;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: rgb(18, 18, 18);
+}
+
+/* .pink {
+  background: linear-gradient(to right, #da22ff, #9733ee);
+  color: #000000;
+}
+
+.blue {
+  background: linear-gradient(to right, rgb(0, 210, 255), rgb(58, 123, 213));
+  color: #000;
+}
+
+.green {
+  background: linear-gradient(to right, rgb(2, 170, 176), rgb(0, 205, 172));
+  color: #000;
+}
+
+.red {
+  background: linear-gradient(to right, rgb(229, 45, 39), rgb(179, 18, 23));
+  color: #000;
+} */
