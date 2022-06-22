@@ -78,13 +78,13 @@ const ListaFinanceira: React.FC<{ dia?: string }> = ({ dia }) => {
   }, [finances, dia])
 
   return (
-    <div className="w-100">
+    <div className="w-100 flex-grow-1 align-self-center">
       {finances?.length === 0 ? (
-        <h2 className="text-center text-light mb-4">
+        <h2 className="text-center text-light my-4">
           Listagem vazia neste mês!
         </h2>
       ) : (
-        <div className="Table">
+        <div className="Table mb-4">
           <h3 className="text-center text-light mb-4">
             Visão geral das sua finanças de {dia ? `${dia}/${mes}/${ano}` : `${mes}/${ano}`}
           </h3>

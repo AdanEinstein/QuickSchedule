@@ -17,6 +17,8 @@ const Calendar: React.FC<IProps> = ({ data }) => {
 
 	useEffect(() => {
 		const calendar = amountCalendar(parseInt(data.ano), parseInt(data.mes));
+		console.log(calendar);
+		
 		setDatas([...calendar]);
 	}, [data]);
 

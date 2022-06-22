@@ -10,7 +10,7 @@
     "make": "electron-forge make",
     "publish": "electron-forge publish",
     "lint": "eslint --ext .ts,.tsx .",
-    "build": "electron-packager ./ --out=dist --platform=win32 --arch=x64 --icon=assets/icon.png --overwrite"
+    "build": "electron-packager ./ --out=dist --platform=win32 --arch=x64 --icon=assets/icon --overwrite"
   },
   "keywords": [],
   "author": {
@@ -31,7 +31,7 @@
         {
           "name": "@electron-forge/maker-zip",
           "platforms": [
-            "darwin"
+            "darwin", "win32"
           ]
         },
         {

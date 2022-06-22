@@ -98,14 +98,14 @@ const FormSettings: React.FC = () => {
               Editar
             </Button>
         ) : (
-          <div className=' mt-2d-flex justify-content-between'>
-            <Button style={{width: '45%'}} variant="danger" onClick={() => {
+          <div className='mt-2 d-flex justify-content-between'>
+            <Button className='flex-grow-1 mx-2' variant="danger" onClick={() => {
                 setEditar(false)
                 setFeedback(undefined)
             }}>
               Cancelar
             </Button>
-            <Button style={{width: '45%'}} variant="primary" onClick={handleSalvar}>
+            <Button className='flex-grow-1 mx-2' variant="primary" onClick={handleSalvar}>
               Salvar
             </Button>
           </div>

@@ -98,7 +98,7 @@ const FormAcoes: React.FC<IAcoes> = ({
           color: 'text-danger',
         })
       })
-  }, [])
+  }, [feedback])
 
   return (
     <ModalCenter

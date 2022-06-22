@@ -126,6 +126,7 @@ const MonthNavButton: React.FC<IProps> = ({ data, setData }) => {
 			<div className="col-md-10 col-lg-10 col-12 pb-3">
 				<div className="d-flex mb-3">
 					<Button
+					variant="danger"
                         onClick={handleVoltar}
                     >
 						<i className="bi bi-arrow-left-circle-fill"></i> Voltar
@@ -139,6 +140,7 @@ const MonthNavButton: React.FC<IProps> = ({ data, setData }) => {
 						/>
 					</FloatingLabel>
 					<Button
+						variant="success"
                         onClick={handleAvancar}
                     >
 						Avançar{" "}

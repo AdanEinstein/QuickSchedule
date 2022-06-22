@@ -79,7 +79,7 @@ const FormLogin: React.FC = () => {
           color: 'text-danger',
         })
       })
-  }, [])
+  }, [feedback, loginRef, senhaRef])
 
   React.useEffect(() => {
     loginRef.current?.focus()
