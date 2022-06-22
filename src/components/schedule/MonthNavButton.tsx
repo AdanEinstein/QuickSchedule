@@ -50,21 +50,37 @@ const MonthNavButton: React.FC<IProps> = ({ data, setData }) => {
 		}/${data.ano}`
 	);
 
-    const handleVoltar = useCallback(() => {
-        if(data.mes !== '01' && data.mes !== '1'){
-            setData({...data, mes: `${parseInt(data.mes) - 1}`})
-        } else {
-            setData({...data, mes: '12', ano: `${parseInt(data.ano) - 1}`})
-        }
-    }, [data])
-    
-    const handleAvancar = useCallback(() => {
-        if(data.mes !== '12'){
-            setData({...data, mes: `${parseInt(data.mes) + 1}`})
-        } else {
-            setData({...data, mes: '01', ano: `${parseInt(data.ano) + 1}`})
-        }
-    }, [data])
+	const handleVoltar = useCallback(() => {
+		if (data.mes !== "01" && data.mes !== "1") {
+			setData({ ...data, mes: `${parseInt(data.mes) - 1}` });
+			setDataLocal(
+				`${data.dia}/${
+					parseInt(data.mes) - 1 < 10
+						? `0${parseInt(data.mes) - 1}`
+						: `${parseInt(data.mes) - 1}`
+				}/${data.ano}`
+			);
+		} else {
+			setData({ ...data, mes: "12", ano: `${parseInt(data.ano) - 1}` });
+			setDataLocal(`${data.dia}/12/${data.ano}`);
+		}
+	}, [data]);
+
+	const handleAvancar = useCallback(() => {
+		if (data.mes !== "12") {
+			setData({ ...data, mes: `${parseInt(data.mes) + 1}` });
+			setDataLocal(
+				`${data.dia}/${
+					parseInt(data.mes) + 1 < 10
+						? `0${parseInt(data.mes) + 1}`
+						: `${parseInt(data.mes) + 1}`
+				}/${data.ano}`
+			);
+		} else {
+			setData({ ...data, mes: "01", ano: `${parseInt(data.ano) + 1}` });
+			setDataLocal(`${data.dia}/01/${data.ano}`);
+		}
+	}, [data]);
 
 	const handleData = useCallback(
 		(e: ChangeEvent) => {
@@ -81,54 +97,54 @@ const MonthNavButton: React.FC<IProps> = ({ data, setData }) => {
 		[dataLocal]
 	);
 
-	const handleEnter = useCallback((e: KeyboardEvent<HTMLInputElement>) => {
-		const enter = e.key;
-		if (enter === "Enter") {
-			schema
-				.validate({ data: dataLocal })
-				.then(() => {
-					const dataArray = dataLocal.split("/");
-					if (dataArray.length === 3) {
-						const [dia, mes, ano] = dataArray;
-						setData({dia, mes, ano,	});
-					} else {
-						const [mes, ano] = dataArray;
-                        setData({dia: '01',mes, ano,});
-					}
-					setFeedback({
-						icon: "bi bi-check2-circle",
-						message: "Data válida!",
-						color: "text-success",
+	const handleEnter = useCallback(
+		(e: KeyboardEvent<HTMLInputElement>) => {
+			const enter = e.key;
+			if (enter === "Enter") {
+				schema
+					.validate({ data: dataLocal })
+					.then(() => {
+						const dataArray = dataLocal.split("/");
+						if (dataArray.length === 3) {
+							const [dia, mes, ano] = dataArray;
+							setData({ dia, mes, ano });
+						} else {
+							const [mes, ano] = dataArray;
+							setData({ dia: "01", mes, ano });
+						}
+						setFeedback({
+							icon: "bi bi-check2-circle",
+							message: "Data válida!",
+							color: "text-success",
+						});
+					})
+					.catch((err: yup.ValidationError) => {
+						console.log("Erro: ", err);
+						if (err.type === "required") {
+							setFeedback({
+								icon: "bi bi-exclamation-triangle-fill",
+								message: err.errors,
+								color: "text-danger",
+							});
+						} else {
+							setFeedback({
+								icon: "bi bi-exclamation-triangle-fill",
+								message: "Data inválida!",
+								color: "text-danger",
+							});
+						}
 					});
-				})
-				.catch((err: yup.ValidationError) => {
-					console.log("Erro: ", err);
-					if (err.type === "required") {
-						setFeedback({
-							icon: "bi bi-exclamation-triangle-fill",
-							message: err.errors,
-							color: "text-danger",
-						});
-					} else {
-						setFeedback({
-							icon: "bi bi-exclamation-triangle-fill",
-							message: "Data inválida!",
-							color: "text-danger",
-						});
-					}
-				});
 			}
-		}, [dataLocal]);
+		},
+		[dataLocal]
+	);
 
 	return (
 		<Container className="d-flex justify-content-center">
 			<div className="col-md-1 col-lg-1 d-none"></div>
 			<div className="col-md-10 col-lg-10 col-12 pb-3">
 				<div className="d-flex mb-3">
-					<Button
-					variant="danger"
-                        onClick={handleVoltar}
-                    >
+					<Button variant="danger" onClick={handleVoltar}>
 						<i className="bi bi-arrow-left-circle-fill"></i> Voltar
 					</Button>
 					<FloatingLabel className="flex-grow-1 mx-2" label="Data">
@@ -139,10 +155,7 @@ const MonthNavButton: React.FC<IProps> = ({ data, setData }) => {
 							onKeyUp={handleEnter}
 						/>
 					</FloatingLabel>
-					<Button
-						variant="success"
-                        onClick={handleAvancar}
-                    >
+					<Button variant="success" onClick={handleAvancar}>
 						Avançar{" "}
 						<i className="bi bi-arrow-right-circle-fill"></i>
 					</Button>

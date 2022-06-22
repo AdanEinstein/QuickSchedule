@@ -12,3 +12,8 @@
     background-color: aliceblue;
     color: #222;
 }
+
+.Day.month{
+    background-color: #00000069;
+    color: aliceblue;
+}
