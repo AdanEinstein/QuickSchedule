@@ -31,7 +31,7 @@ const Nav: React.FC = () => {
           Menu <i className="bi bi-list"></i>
         </span>
       </button>
-      <Link to={''}>Agenda</Link>
+      <Link to={'/schedule'}>Agenda</Link>
       <Link to={'/finances'}>Finanças</Link>
       <Link to={'/settings'}>Configurações</Link>
       <Link to={'/'}>Sair</Link>

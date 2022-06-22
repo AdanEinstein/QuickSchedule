@@ -1,0 +1,14 @@
+.Day{
+    border: 1px solid #222;
+}
+
+.Day:hover{
+    background-color: #4a4a4a;
+    color: aliceblue;
+    font-weight: bolder;
+}
+
+.Day.selected{
+    background-color: aliceblue;
+    color: #222;
+}
