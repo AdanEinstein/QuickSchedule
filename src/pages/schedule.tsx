@@ -1,38 +1,22 @@
 import React, { useState } from "react";
-import { Collapse, Container, Row } from "react-bootstrap";
-import Layout from "../components/layout/Layout";
-import Calendar from "../components/schedule/Calendar";
-import MonthNavButton from "../components/schedule/MonthNavButton";
-import { IDataCalendar, nameMonth } from "../components/utils/utils";
+import LayoutCalendar from "../components/schedule/LayoutCalendar";
+import LayoutSchedule from "../components/schedule/todo/LayoutSchedule";
+import ScheduleProvider from "../contexts/ScheduleContext";
 
-const dataAtual = new Date();
+type Telas = 'calendario' | 'todo'
+
+export interface ILayoutTelaSchedule{
+	setShowTela(arg: Telas): void
+}
 
 const Schedule: React.FC = () => {
-    const [data, setData] = useState<IDataCalendar>({
-        dia: `${dataAtual.getDate()}`,
-        mes: `${dataAtual.getMonth() + 1}`,
-        ano: `${dataAtual.getFullYear()}`,
-    });
-    return (
-        <Layout menu>
-            <Container className="d-flex flex-column">
-                <Row>
-                    <div className="d-flex justify-content-center my-3">
-                        <h1 className="text-white">
-                            Agenda:{" "}
-                            {`${nameMonth(parseInt(data.mes))} de ${data.ano}`}
-                        </h1>
-                    </div>
-                </Row>
-                <Row>
-                    <MonthNavButton data={data} setData={setData} />
-                </Row>
-                <Row className="flex-grow-1">
-                    <Calendar data={data} />
-                </Row>
-            </Container>
-        </Layout>
-    );
+	const [showTela, setShowTela] = useState<Telas>('todo')
+	return (
+		<ScheduleProvider>
+			{showTela === 'calendario' && <LayoutCalendar setShowTela={setShowTela} />}
+			{showTela === 'todo' && <LayoutSchedule setShowTela={setShowTela}/>}
+		</ScheduleProvider>
+	);
 };
 
 export default Schedule;

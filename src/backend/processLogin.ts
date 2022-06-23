@@ -5,13 +5,13 @@ import fs from 'fs'
 import path from 'path'
 import os from 'os'
 
-export const folderExists = (pathBase?: string): Promise<string> => {
+export const folderExists = (...pathBase: string[]): Promise<string> => {
   return new Promise((resolve, reject) => {
-    const pathRootInfos = pathBase
-      ? path.join(os.homedir(), 'quick_schedule', pathBase)
+    const pathRootInfos = pathBase?.length !== 0
+      ? path.join(os.homedir(), 'quick_schedule', ...pathBase)
       : path.join(os.homedir(), 'quick_schedule')
     if (!fs.existsSync(pathRootInfos)) {
-      fs.mkdir(pathRootInfos, error => {
+      fs.mkdir(pathRootInfos, {recursive: true}, error => {
         if (error) {
           reject('Erro para criar a pasta!')
         }

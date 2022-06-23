@@ -1,5 +1,8 @@
 .Day{
+    position: relative;
+    font-size: 1.2rem;
     border: 1px solid #222;
+    cursor: pointer;
 }
 
 .Day:hover{
@@ -15,5 +18,18 @@
 
 .Day.month{
     background-color: #00000069;
+    color: aliceblue;
+    cursor: default;
+}
+
+.CountTasks{
+    position: absolute;
+    top: 3px;
+    right: 3px;
+    padding: 5px 10px;
+    border-radius: 1rem;
+    font-weight: lighter;
+    font-size: 0.8rem;
+    background-color: #222;
     color: aliceblue;
 }

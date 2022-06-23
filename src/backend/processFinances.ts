@@ -1,5 +1,4 @@
-import { IData, IFinance, IResultStatus } from '.'
-import { IStyle } from '../contexts/ThemeContext'
+import { IFinance, IResultStatus } from '.'
 import fs from 'fs'
 import { fileExists, folderExists } from './processLogin'
 
@@ -95,7 +94,7 @@ export const newFinanceProcess = (
   mes: string
 ) => {
   return new Promise<IResultStatus<IFinance>>((resolve, reject) => {
-    folderExists(`ano_${ano}`)
+    folderExists(`finances_ano_${ano}`)
       .then(pathRoot => fileExists(pathRoot, `mes_${mes}.json`, true))
       .then(filePath => newFinance(filePath, finance))
       .then(result => resolve(result))
@@ -105,7 +104,7 @@ export const newFinanceProcess = (
 
 export const listFinanceProcess = (ano: string, mes: string) => {
   return new Promise<IResultStatus<IFinance[]>>((resolve, reject) => {
-    folderExists(`ano_${ano}`)
+    folderExists(`finances_ano_${ano}`)
       .then(pathRoot => fileExists(pathRoot, `mes_${mes}.json`, true))
       .then(filePath => listFinance(filePath))
       .then(result => resolve(result))
@@ -119,7 +118,7 @@ export const editFinanceProcess = (
   mes: string
 ) => {
   return new Promise<IResultStatus<IFinance>>((resolve, reject) => {
-    folderExists(`ano_${ano}`)
+    folderExists(`finances_ano_${ano}`)
       .then(pathRoot => fileExists(pathRoot, `mes_${mes}.json`, true))
       .then(filePath => newFinance(filePath, finance, true))
       .then(result => resolve(result))
@@ -133,7 +132,7 @@ export const deleteFinanceProcess = (
   mes: string
 ) => {
   return new Promise<IResultStatus<IFinance>>((resolve, reject) => {
-    folderExists(`ano_${ano}`)
+    folderExists(`finances_ano_${ano}`)
       .then(pathRoot => fileExists(pathRoot, `mes_${mes}.json`, true))
       .then(filePath => newFinance(filePath, finance, true, true))
       .then(result => resolve(result))

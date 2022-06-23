@@ -98,7 +98,6 @@ const LayoutFinances: React.FC = () => {
                 setShowRestaurar(true);
             })
             .catch((err: yup.ValidationError) => {
-                console.log("Erro: ", err);
                 if (err.type === "required") {
                     setFeedback({
                         icon: "bi bi-exclamation-triangle-fill",

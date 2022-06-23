@@ -44,8 +44,6 @@ export function amountCalendar(ano: number, mes: number): IDataCalendar[] {
 	const quantDias = quantDiasMes(mes, isAnoBi);
 	const quantDiasAnterior = quantDiasMes(mes === 1 ? 12 : mes - 1, isAnoBi);
 	const diaSemana01 = new Date(ano, mes - 1, 1).getDay();
-	console.log(diaSemana01);
-	
 	return amount.map((current, index) => {
 		if (index >= diaSemana01) {
 			if (dia >= quantDias) {

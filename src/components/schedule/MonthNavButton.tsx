@@ -119,7 +119,6 @@ const MonthNavButton: React.FC<IProps> = ({ data, setData }) => {
 						});
 					})
 					.catch((err: yup.ValidationError) => {
-						console.log("Erro: ", err);
 						if (err.type === "required") {
 							setFeedback({
 								icon: "bi bi-exclamation-triangle-fill",
