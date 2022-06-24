@@ -1,15 +1,10 @@
-import React, { MouseEventHandler, useEffect, useRef, useState } from "react";
+import React, { MouseEventHandler, useRef, useState } from "react";
 import {
 	Overlay,
-	OverlayTrigger,
 	Popover,
 	PopoverBody,
-	PopoverHeader,
 } from "react-bootstrap";
-import { IResultStatus } from "../../backend";
-import { IDataCalendar } from "../utils/utils";
 import "./Day.css";
-import { ISchedule } from "./todo/ISchedule";
 
 interface DayProps {
 	notThisMonth?: boolean;
@@ -25,7 +20,6 @@ const Day: React.FC<DayProps> = ({
 }) => {
 	const divRef = useRef<HTMLDivElement>(null);
 	const [show, setShow] = useState<boolean>(false);
-	const [countTasks, setCountTasks] = useState<number>(0);
 	return (
 		<>
 			<div
@@ -37,32 +31,16 @@ const Day: React.FC<DayProps> = ({
 				onMouseEnter={() => !notThisMonth && setShow(true)}
 				onMouseLeave={() => !notThisMonth && setShow(false)}
 			>
-				{countTasks !== 0 && !notThisMonth && (
-					<div className="CountTasks">{countTasks}</div>
-				)}
 				{children}
 			</div>
 			<Overlay target={divRef.current} show={show} placement="top">
-				{(props) =>
-					countTasks ? (
-						<Popover {...props}>
-							<PopoverHeader as="h3">Resumo</PopoverHeader>
-							<PopoverBody>
-								Você possui <strong>{countTasks}</strong>{" "}
-								agendamentos neste dia!
-								<br />
-								Clique e agende mais!
-							</PopoverBody>
-						</Popover>
-					) : (
-						<Popover {...props}>
-							<PopoverHeader as="h3">Dica</PopoverHeader>
-							<PopoverBody>
-								Clique aqui para efetuar um novo agendamento!
-							</PopoverBody>
-						</Popover>
-					)
-				}
+				{(props) => (
+					<Popover {...props}>
+						<PopoverBody>
+							Clique aqui para entrar nesta data!
+						</PopoverBody>
+					</Popover>
+				)}
 			</Overlay>
 		</>
 	);

@@ -44,7 +44,8 @@ const StatusTable: React.FC<IStatusTableProps> = ({
 						atual.replace(".", "").replace(",", ".")
 					);
 					return (acc += curr);
-				}, 0).toLocaleString('pt-br', { minimumFractionDigits: 2 });
+				}, 0)
+				.toLocaleString("pt-br", { minimumFractionDigits: 2 });
 			if (status === "concluido") {
 				window.Main.sendMessage("newfinance", {
 					finance: {
@@ -77,7 +78,7 @@ const StatusTable: React.FC<IStatusTableProps> = ({
 	return (
 		<>
 			<td
-				className={`${
+				className={`d-md-table-cell d-none ${
 					(schedule.status === "agendado" && "table-secondary") ||
 					(schedule.status === "concluido" && "table-success") ||
 					(schedule.status === "cancelado" && "table-danger")

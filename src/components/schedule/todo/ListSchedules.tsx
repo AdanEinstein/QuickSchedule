@@ -68,7 +68,7 @@ const ListSchedules: React.FC<IAcoes> = ({ setTelas, setTarget }) => {
 						<th>Horário</th>
 						<th>Cliente</th>
 						<th className='d-md-table-cell d-none'>Produtos</th>
-						<th>Status</th>
+						<th className='d-md-table-cell d-none'>Status</th>
 						<th>Ações</th>
 					</tr>
 				</thead>
