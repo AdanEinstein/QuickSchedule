@@ -14,5 +14,5 @@ export interface ISchedule {
 export interface IProductSchedule{
     id: string,
     descricao?: string,
-    valor?: string
+    valor: string
 }

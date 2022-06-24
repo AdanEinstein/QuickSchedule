@@ -8,9 +8,11 @@ import "./ListSchedule.css";
 import { IAcoes } from "./LayoutSchedule";
 import shortid from "shortid";
 import StatusTable from "./StatusTable";
+import ProdutosTable from "./ProdutosTable";
 
 const ListSchedules: React.FC<IAcoes> = ({ setTelas, target, setTarget }) => {
 	const { dia, mes, ano, schedules, setSchedules } = useSchedule();
+	const [restore, setRestore] = useState<boolean>(false);
 
 	useEffect(() => {
 		window.Main.sendMessage("schedule", { ano, mes, dia });
@@ -20,7 +22,7 @@ const ListSchedules: React.FC<IAcoes> = ({ setTelas, target, setTarget }) => {
 				resp.data && setSchedules(resp.data);
 			}
 		);
-	}, [dia, mes, ano]);
+	}, [dia, mes, ano, restore]);
 
 	const handleListDelete = useCallback(
 		(schedule: ISchedule) => {
@@ -49,6 +51,7 @@ const ListSchedules: React.FC<IAcoes> = ({ setTelas, target, setTarget }) => {
 					<tr>
 						<th>Horário</th>
 						<th>Cliente</th>
+						<th className='d-md-table-cell d-none'>Produtos</th>
 						<th>Status</th>
 						<th>Ações</th>
 					</tr>
@@ -59,7 +62,8 @@ const ListSchedules: React.FC<IAcoes> = ({ setTelas, target, setTarget }) => {
 							<tr key={sch.id}>
 								<td>{sch.horario}</td>
 								<td>{sch.cliente}</td>
-								<StatusTable status={sch.status} />
+								<ProdutosTable schedule={sch}/>
+								<StatusTable schedule={sch} setRestore={setRestore} restore={restore}/>
 								<td className="d-flex justify-content-around">
 									<Button
 										size="sm"
