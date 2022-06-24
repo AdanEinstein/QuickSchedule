@@ -1,11 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Button, Table } from "react-bootstrap";
 import { Container } from "react-bootstrap";
 import { useSchedule } from "../../../contexts/ScheduleContext";
-import { ISchedule } from "./ISchedule";
+import { ISchedule, Status } from "./ISchedule";
 import { IResultStatus } from "../../../backend";
+import "./ListSchedule.css";
+import { IAcoes } from "./LayoutSchedule";
+import shortid from "shortid";
+import StatusTable from "./StatusTable";
 
-const ListSchedules: React.FC = () => {
+const ListSchedules: React.FC<IAcoes> = ({ setTelas, target, setTarget }) => {
 	const { dia, mes, ano, schedules, setSchedules } = useSchedule();
 
 	useEffect(() => {
@@ -18,10 +22,30 @@ const ListSchedules: React.FC = () => {
 		);
 	}, [dia, mes, ano]);
 
+	const handleListDelete = useCallback(
+		(schedule: ISchedule) => {
+			if (setTarget && setTelas) {
+				setTarget({ schedule, estado: "deletar" });
+				setTelas("form");
+			}
+		},
+		[setTarget, setTelas]
+	);
+
+	const handleListEdit = useCallback(
+		(schedule: ISchedule) => {
+			if (setTarget && setTelas) {
+				setTarget({ schedule, estado: "editar" });
+				setTelas("form");
+			}
+		},
+		[setTarget, setTelas]
+	);
+
 	return (
-		<Container>
+		<Container className="Lista">
 			<Table className="table-light">
-				<thead>
+				<thead className="table-dark">
 					<tr>
 						<th>Horário</th>
 						<th>Cliente</th>
@@ -30,33 +54,54 @@ const ListSchedules: React.FC = () => {
 					</tr>
 				</thead>
 				<tbody>
-					{/* {schedules?.map((schedule) => {
+					{schedules?.map((sch) => {
 						return (
-							<tr key={schedule.id}>
-								<td>{schedule.horario}</td>
-								<td>{schedule.cliente}</td>
-								<td>{schedule.status}</td>
+							<tr key={sch.id}>
+								<td>{sch.horario}</td>
+								<td>{sch.cliente}</td>
+								<StatusTable status={sch.status} />
 								<td className="d-flex justify-content-around">
 									<Button
 										size="sm"
 										variant="warning"
-										// onClick={() => handleListEdit(schedule)}
+										onClick={() => handleListEdit(sch)}
 									>
 										<i className="bi bi-pencil-square flex-grow-1 mx-1"></i>
 									</Button>
 									<Button
 										size="sm"
 										variant="danger"
-										// onClick={() =>	handleListDelete(schedule)}
+										onClick={() => handleListDelete(sch)}
 									>
 										<i className="bi bi-trash-fill flex-grow-1 mx-1"></i>
 									</Button>
 								</td>
 							</tr>
 						);
-					})} */}
+					})}
 				</tbody>
 			</Table>
+			<Button
+				className="position-absolute btn-lg"
+				style={{ bottom: 30, right: 30 }}
+				onClick={() => {
+					setTarget &&
+						setTarget({
+							schedule: {
+								id: shortid(),
+								data: { ano, mes, dia },
+								cliente: "",
+								horario: "",
+								produto: [],
+								status: "agendado",
+							},
+							estado: "novo",
+						});
+					setTelas && setTelas("form");
+				}}
+			>
+				Novo agendamento <i className="bi bi-plus-square-fill"></i>
+			</Button>
 		</Container>
 	);
 };
