@@ -149,28 +149,6 @@ const FormSchedule: React.FC<IAcoes> = ({ target, setTarget, setTelas }) => {
 					schedule.produto.forEach((p) => {
 						schemaProduto
 							.validate(p)
-							.then(() => {
-								window.Main.sendMessage(message, {
-									schedule,
-									ano,
-									mes,
-									dia,
-								});
-								window.Main.on(
-									message,
-									(
-										_: any,
-										resp: IResultStatus<ISchedule>
-									) => {
-										setFeedback({
-											icon: "bi bi-check2-circle",
-											message: resp.message,
-											color: "text-success",
-										});
-									}
-								);
-								setTelas("lista");
-							})
 							.catch((err: yup.ValidationError) => {
 								setFeedback({
 									icon: "bi bi-exclamation-triangle-fill",
@@ -179,6 +157,25 @@ const FormSchedule: React.FC<IAcoes> = ({ target, setTarget, setTelas }) => {
 								});
 							});
 					});
+				})
+				.then(() => {
+					window.Main.sendMessage(message, {
+						schedule,
+						ano,
+						mes,
+						dia,
+					});
+					window.Main.on(
+						message,
+						(_: any, resp: IResultStatus<ISchedule>) => {
+							setFeedback({
+								icon: "bi bi-check2-circle",
+								message: resp.message,
+								color: "text-success",
+							});
+						}
+					);
+					setTelas("lista");
 				})
 				.catch((err: yup.ValidationError) => {
 					setFeedback({
@@ -282,10 +279,20 @@ const FormSchedule: React.FC<IAcoes> = ({ target, setTarget, setTelas }) => {
 					</Button>
 					<Button
 						className="btn-lg flex-grow-1 mx-1"
-						variant={target?.estado === 'novo' ? "success" : target?.estado === 'editar' ? 'warning' : 'danger'}
+						variant={
+							target?.estado === "novo"
+								? "success"
+								: target?.estado === "editar"
+								? "warning"
+								: "danger"
+						}
 						onClick={handleConfirm}
 					>
-						{target?.estado === 'novo' ? "Novo" : target?.estado === 'editar' ? 'Editar' : 'Deletar'}
+						{target?.estado === "novo"
+							? "Novo"
+							: target?.estado === "editar"
+							? "Editar"
+							: "Deletar"}
 					</Button>
 				</div>
 			</Row>

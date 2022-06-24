@@ -10,7 +10,7 @@ export interface ILayoutTelaSchedule{
 }
 
 const Schedule: React.FC = () => {
-	const [showTela, setShowTela] = useState<Telas>('calendario')
+	const [showTela, setShowTela] = useState<Telas>('todo')
 	return (
 		<ScheduleProvider>
 			{showTela === 'calendario' && <LayoutCalendar setShowTela={setShowTela} />}

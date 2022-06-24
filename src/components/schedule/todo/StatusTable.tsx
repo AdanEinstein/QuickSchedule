@@ -11,55 +11,68 @@ interface IStatusTableProps {
 	setRestore(arg: boolean): void;
 }
 
-const StatusTable: React.FC<IStatusTableProps> = ({ schedule, setRestore, restore }) => {
+const StatusTable: React.FC<IStatusTableProps> = ({
+	schedule,
+	setRestore,
+	restore,
+}) => {
 	const tdRef = useRef<HTMLTableDataCellElement>(null);
 	const [show, setShow] = useState<boolean>(false);
 	const [fix, setFix] = useState<boolean>(false);
 	const { dia, mes, ano } = useSchedule();
 
-	const handleEditStatus = useCallback((status: Status, sched: ISchedule) => {
-		const newSchedule: ISchedule = {
-			...sched,
-			status: status,
-		};
-		window.Main.sendMessage("editschedule", {
-			schedule: newSchedule,
-			ano,
-			mes,
-			dia,
-		});
-		window.Main.on("editschedule", () => {
-			setFix(false);
-			setRestore(!restore)
-		});
-		if(status === 'concluido'){
-			schedule.produto.forEach(prod => {
-				window.Main.sendMessage('newfinance', {
+	const handleEditStatus = useCallback(
+		(status: Status, sched: ISchedule) => {
+			const newSchedule: ISchedule = {
+				...sched,
+				status: status,
+			};
+			window.Main.sendMessage("editschedule", {
+				schedule: newSchedule,
+				ano,
+				mes,
+				dia,
+			});
+			window.Main.on("editschedule", () => {
+				setFix(false);
+				setRestore(!restore);
+			});
+			const total = newSchedule.produto
+				.map((sch) => sch.valor)
+				.reduce((acc: number, atual: string) => {
+					const curr = parseFloat(
+						atual.replace(".", "").replace(",", ".")
+					);
+					return (acc += curr);
+				}, 0).toLocaleString('pt-br', { minimumFractionDigits: 2 });
+			if (status === "concluido") {
+				window.Main.sendMessage("newfinance", {
 					finance: {
-					  ...prod,
-					  descricao: `${prod.descricao} p/ ${schedule.cliente}`,
-					  tipo: 'entrada',
-					  data: `${dia}/${mes}/${ano}`,
+						id: schedule.id,
+						descricao: `Pagamento ${schedule.cliente}`,
+						valor: total,
+						tipo: "entrada",
+						data: `${dia}/${mes}/${ano}`,
 					},
 					ano,
 					mes,
-				})
-			})
-		} else {
-			schedule.produto.forEach(prod => {
-				window.Main.sendMessage('deletefinance', {
+				});
+			} else {
+				window.Main.sendMessage("deletefinance", {
 					finance: {
-					  ...prod,
-					  descricao: `${prod.descricao} p/ ${schedule.cliente}`,
-					  tipo: 'entrada',
-					  data: `${dia}/${mes}/${ano}`,
+						id: schedule.id,
+						descricao: `Pagamento ${schedule.cliente}`,
+						valor: total,
+						tipo: "entrada",
+						data: `${dia}/${mes}/${ano}`,
 					},
 					ano,
 					mes,
-				})
-			})
-		}
-	}, [restore]);
+				});
+			}
+		},
+		[restore]
+	);
 
 	return (
 		<>
@@ -131,14 +144,16 @@ const StatusTable: React.FC<IStatusTableProps> = ({ schedule, setRestore, restor
 										className="flex-grow-1 m-3"
 										variant={"secondary"}
 										size="lg"
-										disabled={schedule.status === 'agendado'}
+										disabled={
+											schedule.status === "agendado"
+										}
 										onClick={() =>
 											handleEditStatus(
 												"agendado",
 												schedule
 											)
 										}
-										>
+									>
 										Agendado{" "}
 										<i className="bi bi-hourglass-split"></i>
 									</Button>
@@ -146,14 +161,16 @@ const StatusTable: React.FC<IStatusTableProps> = ({ schedule, setRestore, restor
 										className="flex-grow-1 m-3"
 										variant={"danger"}
 										size="lg"
-										disabled={schedule.status === 'cancelado'}
+										disabled={
+											schedule.status === "cancelado"
+										}
 										onClick={() =>
 											handleEditStatus(
 												"cancelado",
 												schedule
 											)
 										}
-										>
+									>
 										Cancelado{" "}
 										<i className="bi bi-x-circle"></i>
 									</Button>
@@ -161,7 +178,9 @@ const StatusTable: React.FC<IStatusTableProps> = ({ schedule, setRestore, restor
 										className="flex-grow-1 m-3"
 										variant={"success"}
 										size="lg"
-										disabled={schedule.status === 'concluido'}
+										disabled={
+											schedule.status === "concluido"
+										}
 										onClick={() =>
 											handleEditStatus(
 												"concluido",
@@ -183,7 +202,3 @@ const StatusTable: React.FC<IStatusTableProps> = ({ schedule, setRestore, restor
 };
 
 export default StatusTable;
-function IFinance(arg0: string, arg1: { finance: { tipo: string; data: string; id: string; horario: string; cliente: string; produto: import("./ISchedule").IProductSchedule[]; status: Status; }; ano: string; mes: string; }, IFinance: any) {
-	throw new Error("Function not implemented.");
-}
-

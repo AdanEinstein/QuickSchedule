@@ -93,7 +93,7 @@ const ListaFinanceira: React.FC<{ dia?: string }> = ({ dia }) => {
               <tr className="table-dark">
                 <th>Tipo</th>
                 <th className="d-md-table-cell d-none">Data</th>
-                <th>Descrição</th>
+                <th className='d-md-table-cell d-none'>Descrição</th>
                 <th>Valor R$</th>
                 <th>Ações</th>
               </tr>
@@ -123,7 +123,7 @@ const ListaFinanceira: React.FC<{ dia?: string }> = ({ dia }) => {
                         )}
                       </td>
                       <td className="d-md-table-cell d-none">{finance.data}</td>
-                      <td>{finance.descricao}</td>
+                      <td className='d-md-table-cell d-none'>{finance.descricao}</td>
                       <td>{`R$ ${finance.valor}`}</td>
                       <td className="d-flex justify-content-around">
                         <Button
