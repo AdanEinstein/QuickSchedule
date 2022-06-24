@@ -116,7 +116,7 @@ const LayoutFinances: React.FC = () => {
     return (
         <Layout menu>
             <div className="container d-flex flex-column">
-                <h1 className="text-white text-center my-3">Finanças</h1>
+                <h1 className="text-white text-center my-2">Finanças</h1>
                 <div className="row w-100 my-2">
                     <div className="col-lg-2"></div>
                     <div className="col-lg-8 col-12">
@@ -125,73 +125,71 @@ const LayoutFinances: React.FC = () => {
                     <div className="col-lg-2"></div>
                 </div>
                 <div className="container flex-grow-1 d-flex justify-content-center align-items-stretch">
-                    {/* <div className="row w-100"> */}
-                        <div className="col-lg-2"></div>
-                        <div className="col-lg-8 col-12">
-                            {tela === "entrada" && <FormEntrada />}
-                            {tela === "saida" && <FormSaida />}
-                            {tela === "null" && (
-                                <div className='d-flex flex-column'>
-                                    <div className="d-flex my-2">
-                                        <FloatingLabel
-                                            className="flex-grow-1"
-                                            label="Selecione a data para busca"
+                    <div className="col-lg-2"></div>
+                    <div className="col-lg-8 col-12">
+                        {tela === "entrada" && <FormEntrada />}
+                        {tela === "saida" && <FormSaida />}
+                        {tela === "null" && (
+                            <div className="d-flex flex-column">
+                                <div className="d-flex my-2">
+                                    <FloatingLabel
+                                        className="flex-grow-1"
+                                        label="Selecione a data para busca"
+                                    >
+                                        <FormControl
+                                            placeholder="Data"
+                                            type="text"
+                                            value={data}
+                                            onChange={handleData}
+                                            ref={dataRef}
+                                        />
+                                    </FloatingLabel>
+                                    <div className="d-flex">
+                                        <Button
+                                            className="mx-3 flex-grow-1"
+                                            onClick={handleBuscar}
                                         >
-                                            <FormControl
-                                                placeholder="Data"
-                                                type="text"
-                                                value={data}
-                                                onChange={handleData}
-                                                ref={dataRef}
-                                            />
-                                        </FloatingLabel>
-                                        <div className="d-flex">
+                                            Buscar{" "}
+                                            <i className="bi bi-search"></i>
+                                        </Button>
+                                        {showRestaurar && (
                                             <Button
-                                                className="mx-3 flex-grow-1"
-                                                onClick={handleBuscar}
+                                                className="flex-grow-1"
+                                                variant="outline-warning"
+                                                onClick={handleRestaurar}
+                                                onMouseEnter={(
+                                                    e: MouseEvent
+                                                ) => {
+                                                    (
+                                                        e.target as HTMLButtonElement
+                                                    ).prepend("Restaurar");
+                                                }}
+                                                onMouseLeave={(
+                                                    e: MouseEvent
+                                                ) => {
+                                                    (
+                                                        e.target as HTMLButtonElement
+                                                    ).innerHTML =
+                                                        '<i class="bi bi-arrow-clockwise"></i>';
+                                                }}
                                             >
-                                                Buscar{" "}
-                                                <i className="bi bi-search"></i>
+                                                <i className="bi bi-arrow-clockwise"></i>
                                             </Button>
-                                            {showRestaurar && (
-                                                <Button
-                                                    className="flex-grow-1"
-                                                    variant="outline-warning"
-                                                    onClick={handleRestaurar}
-                                                    onMouseEnter={(
-                                                        e: MouseEvent
-                                                    ) => {
-                                                        (
-                                                            e.target as HTMLButtonElement
-                                                        ).prepend("Restaurar");
-                                                    }}
-                                                    onMouseLeave={(
-                                                        e: MouseEvent
-                                                    ) => {
-                                                        (
-                                                            e.target as HTMLButtonElement
-                                                        ).innerHTML =
-                                                            '<i class="bi bi-arrow-clockwise"></i>';
-                                                    }}
-                                                >
-                                                    <i className="bi bi-arrow-clockwise"></i>
-                                                </Button>
-                                            )}
-                                        </div>
+                                        )}
                                     </div>
-                                    <FeedbackText feedback={feedback} />
-                                    <ListaFinanceira
-                                        dia={
-                                            data.split("/").length === 3
-                                                ? data.split("/")[0]
-                                                : undefined
-                                        }
-                                    />
                                 </div>
-                            )}
-                        </div>
-                        <div className="col-lg-2"></div>
-                    {/* </div> */}
+                                <FeedbackText feedback={feedback} />
+                                <ListaFinanceira
+                                    dia={
+                                        data.split("/").length === 3
+                                            ? data.split("/")[0]
+                                            : undefined
+                                    }
+                                />
+                            </div>
+                        )}
+                    </div>
+                    <div className="col-lg-2"></div>
                 </div>
             </div>
         </Layout>
