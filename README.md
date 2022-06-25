@@ -11,3 +11,6 @@ Sistema desktop para auxiliar profissionais tanto no controle de suas agendas qu
 
 # Finanças #
 ![image](https://user-images.githubusercontent.com/90571586/175789446-b7a10712-825a-4a14-ae69-325d9fdbfade.png)
+
+# Download disponível aqui! (Windows ou MacOS)
+https://quick-schedule.vercel.app/
